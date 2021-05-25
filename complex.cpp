@@ -3,7 +3,7 @@ using namespace std;
 class complex
 {
 private :
-    int a, b;
+    float a, b;
 public :
     complex (int x, int y)                  // constructor for 2 arguments
     { a=x; b=y;}
@@ -37,9 +37,23 @@ public :
         temp.b=(b*C.a)+(a*C.b);
         return (temp);
     }
-    // -complex operator/(complex C) still to be coded   // overloading binary /
-
-
+    inline complex con ()                   // conjugate of a complex number
+    {
+        complex temp;
+        temp.a=a;
+        temp.b=-b;
+        return (temp);
+    }
+    inline complex operator/(complex C)
+    {
+        complex temp,temp1;
+        complex pro;
+        temp1= C.con();
+        pro= (C*(temp1));
+        temp.a= ((a*C.a) + (b*C.b))/pro.a;
+        temp.b= ((b*C.a)-(a*C.b))/pro.a;
+        return (temp);
+    }
     friend istream& operator>>(istream&, complex&);      // overloading >> as a friend of ISTREAM and complex
     friend ostream& operator<<(ostream&, complex);       // overloading << as a friend of OSTREAM and complex
 
@@ -57,9 +71,9 @@ ostream& operator<<(ostream& dout, complex C)
 
 int main ()
 {
-    complex c1(3,4),c2(5,6),c3(9),c4;           //initializing to check all versions of constructor function
+    complex c1(3,-4),c2(4,6),c3(9),c4;           //initializing to check all versions of constructor function
     cout<<c1<<c2<<c3;                           // overloading of COUT with cascading
-    c4=c1*c2;                                   // multiplication of 2 complex numbers
+    c4=c1/c2;                    //c4= c1.operator/(c2)               // Division of 2 complex numbers
     cout<<c4;
     cin>>c1>>c2;                                // overloading of CIN with cascading
     cout<<c1<<c2;
